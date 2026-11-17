@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Backstage — Online Presence for Local Restaurants</title>
+<meta name="description" content="Backstage handles your Google reviews, Google profile and social posts every week, so you can run the restaurant. $199/month, no contract.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#141210; --bg2:#1c1916; --card:#221e1a; --line:#3a332c;
+  --text:#f3ece2; --muted:#b5a998; --gold:#e7b453; --gold2:#f4cf83; --red:#b4412f;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:Inter,system-ui,sans-serif;line-height:1.6;font-size:17px}
+a{color:inherit}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+h1,h2,h3{font-family:Fraunces,Georgia,serif;font-weight:700;line-height:1.15}
+h2{font-size:clamp(28px,4vw,40px);margin-bottom:14px}
+.eyebrow{color:var(--gold);font-weight:600;letter-spacing:.12em;text-transform:uppercase;font-size:13px;margin-bottom:10px}
+.btn{display:inline-block;background:var(--gold);color:#1a1510;text-decoration:none;font-weight:600;padding:14px 26px;border-radius:999px;transition:background .2s}
+.btn:hover{background:var(--gold2)}
+.btn.ghost{background:transparent;color:var(--text);border:1px solid var(--line)}
+.btn.ghost:hover{border-color:var(--gold)}
+nav{position:sticky;top:0;z-index:5;background:rgba(20,18,16,.88);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{font-family:Fraunces,serif;font-size:24px;font-weight:700;text-decoration:none;display:flex;align-items:center;gap:10px}
+.logo span{width:12px;height:12px;border-radius:50%;background:var(--gold);box-shadow:0 0 18px var(--gold)}
+nav .links a{color:var(--muted);text-decoration:none;margin-left:22px;font-size:15px}
+nav .links a:hover{color:var(--text)}
+nav .links a.btn{color:#1a1510;padding:9px 18px;font-size:14px}
+@media(max-width:700px){nav .links a:not(.btn){display:none}}
+
+.hero{position:relative;overflow:hidden;padding:96px 0 88px;text-align:center}
+.hero:before{content:"";position:absolute;inset:-20% 10% auto;height:620px;background:radial-gradient(closest-side,rgba(231,180,83,.22),transparent);pointer-events:none}
+.curtain{position:absolute;top:0;bottom:0;width:9%;background:repeating-linear-gradient(90deg,#5a1f17 0 14px,#7a2a1f 14px 28px);opacity:.55}
+.curtain.l{left:0;mask-image:linear-gradient(90deg,#000,transparent)}
+.curtain.r{right:0;mask-image:linear-gradient(-90deg,#000,transparent)}
+.hero h1{font-size:clamp(38px,6.5vw,68px);max-width:820px;margin:0 auto 20px;position:relative}
+.hero h1 em{font-style:normal;color:var(--gold)}
+.hero p{color:var(--muted);font-size:clamp(17px,2vw,20px);max-width:620px;margin:0 auto 32px;position:relative}
+.hero .ctas{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;position:relative}
+.trust{margin-top:26px;color:var(--muted);font-size:14px;position:relative}
+
+section{padding:80px 0;border-top:1px solid var(--line)}
+.lead{color:var(--muted);max-width:640px;margin-bottom:40px}
+.grid{display:grid;gap:18px}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g2{grid-template-columns:repeat(2,1fr)}
+@media(max-width:860px){.g3,.g2{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:26px}
+.card h3{font-size:22px;margin-bottom:8px}
+.card p{color:var(--muted)}
+.stat{font-family:Fraunces,serif;font-size:44px;color:var(--gold);line-height:1;margin-bottom:10px}
+.icon{width:42px;height:42px;border-radius:12px;background:rgba(231,180,83,.12);display:grid;place-items:center;margin-bottom:16px;color:var(--gold)}
+.icon svg{width:22px;height:22px}
+
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media(max-width:860px){.compare{grid-template-columns:1fr}}
+.review{background:#fff;color:#202124;border-radius:12px;padding:18px;font-size:15px}
+.review .who{font-weight:600}
+.review .stars{color:#fbbc04;letter-spacing:2px;font-size:14px}
+.review .reply{margin-top:12px;border-left:3px solid #dadce0;padding-left:12px;color:#3c4043}
+.review .reply b{display:block;font-size:13px;color:#5f6368;margin-bottom:2px}
+.review .none{margin-top:12px;color:#c5221f;font-size:13px;font-weight:600}
+.tag{display:inline-block;font-size:12px;font-weight:600;padding:4px 10px;border-radius:999px;margin-bottom:12px}
+.tag.bad{background:rgba(180,65,47,.2);color:#f19b8b}
+.tag.good{background:rgba(231,180,83,.18);color:var(--gold2)}
+
+.steps{counter-reset:s}
+.step{position:relative;padding-left:62px}
+.step:before{counter-increment:s;content:counter(s);position:absolute;left:0;top:0;width:42px;height:42px;border-radius:50%;border:1px solid var(--gold);color:var(--gold);display:grid;place-items:center;font-family:Fraunces,serif;font-weight:700}
+
+.price{max-width:560px;margin:0 auto;text-align:center;background:linear-gradient(180deg,#2a241d,var(--card));border:1px solid var(--gold);border-radius:20px;padding:40px 30px}
+.price .amt{font-family:Fraunces,serif;font-size:64px;line-height:1}
+.price .amt small{font-size:20px;color:var(--muted)}
+.price ul{list-style:none;text-align:left;margin:26px 0 30px}
+.price li{padding:10px 0 10px 32px;border-bottom:1px solid var(--line);position:relative}
+.price li:before{content:"✓";position:absolute;left:4px;color:var(--gold);font-weight:700}
+.addons{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:22px;color:var(--muted);font-size:15px}
+.addons span{border:1px solid var(--line);border-radius:999px;padding:8px 14px}
+.launch{margin-top:22px;color:var(--gold2);font-weight:600}
+
+details{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 22px;margin-bottom:12px}
+summary{cursor:pointer;font-weight:600;list-style:none}
+summary::-webkit-details-marker{display:none}
+summary:after{content:"+";float:right;color:var(--gold)}
+details[open] summary:after{content:"–"}
+details p{color:var(--muted);margin-top:10px}
+
+.final{text-align:center}
+.final p{color:var(--muted);max-width:560px;margin:0 auto 28px}
+footer{border-top:1px solid var(--line);padding:30px 0;color:var(--muted);font-size:14px}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+</style>
+</head>
+<body>
+
+<nav><div class="wrap">
+  <a class="logo" href="#"><span></span>Backstage</a>
+  <div class="links">
+    <a href="#what">What you get</a>
+    <a href="#how">How it works</a>
+    <a href="#pricing">Pricing</a>
+    <a class="btn" href="#audit">Free audit</a>
+  </div>
+</div></nav>
+
+<header class="hero">
+  <div class="curtain l"></div><div class="curtain r"></div>
+  <div class="wrap">
+    <div class="eyebrow">For local restaurants &amp; cafés</div>
+    <h1>We run the <em>backstage</em>.<br>You run the show.</h1>
+    <p>Every Google review answered, your Google profile kept fresh, and your social media posted every week. Done for you for $199 a month, with no contract.</p>
+    <div class="ctas">
+      <a class="btn" href="#audit">Get a free review audit</a>
+      <a class="btn ghost" href="#what">See what's included</a>
+    </div>
+    <div class="trust">Month to month · Cancel anytime · 100% online, no meetings needed</div>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <div class="eyebrow">Why it matters</div>
+    <h2>Your next customer is reading your reviews right now.</h2>
+    <p class="lead">Before people try a new restaurant, they check Google. What they see there (your stars, your photos, and how you answer reviews) decides whether they come in or keep scrolling.</p>
+    <div class="grid g3">
+      <div class="card"><div class="stat">Stars</div><h3>Ratings drive visits</h3><p>Diners compare stars and recent reviews side by side, and a few tenths of a star can swing which place they pick.</p></div>
+      <div class="card"><div class="stat">Replies</div><h3>Silence looks like neglect</h3><p>An unanswered complaint stays on your page for years. A calm, kind reply shows every future reader that you care.</p></div>
+      <div class="card"><div class="stat">Fresh</div><h3>Active profiles get noticed</h3><p>Regular posts, new photos, and correct hours keep your Google profile looking alive and trustworthy.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="eyebrow">The difference</div>
+    <h2>Same review. Very different impression.</h2>
+    <p class="lead">Here's what a typical unanswered review looks like, and what it looks like once Backstage is on it.</p>
+    <div class="compare">
+      <div>
+        <span class="tag bad">Before</span>
+        <div class="review">
+          <div class="who">Sam R.</div>
+          <div class="stars">★★☆☆☆</div>
+          <p>Food was good but we waited 25 minutes for our order and nobody checked on us.</p>
+          <div class="none">No response from the owner</div>
+        </div>
+      </div>
+      <div>
+        <span class="tag good">After</span>
+        <div class="review">
+          <div class="who">Sam R.</div>
+          <div class="stars">★★☆☆☆</div>
+          <p>Food was good but we waited 25 minutes for our order and nobody checked on us.</p>
+          <div class="reply"><b>Response from the owner · 1 day ago</b>Sam, thank you for telling us, and we're sorry about the wait. That's not the experience we want for anyone. We're glad you enjoyed the food, and we've talked with the team about checking in on tables during busy times. We'd love another chance to get it right.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="what">
+  <div class="wrap">
+    <div class="eyebrow">What you get</div>
+    <h2>Everything your online presence needs, every month.</h2>
+    <p class="lead">One simple plan. You approve the style once in the first week, and after that it just happens.</p>
+    <div class="grid g2">
+      <div class="card"><div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div><h3>Every review answered</h3><p>A personal, on-brand reply to every Google review within 24 hours. Negative reviews get a calm, professional answer, and we flag them to you right away.</p></div>
+      <div class="card"><div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div><h3>Google profile kept fresh</h3><p>Hours, menu link, and description always correct, plus a new update or photo post every week so your listing looks alive.</p></div>
+      <div class="card"><div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg></div><h3>3 social posts a week</h3><p>Instagram and Facebook posts about your dishes, specials, and events, written in your voice and posted on a schedule.</p></div>
+      <div class="card"><div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 5-6"/></svg></div><h3>A simple monthly report</h3><p>One page with reviews answered, your rating trend, posts published, and how many people viewed and called from Google.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="wrap">
+    <div class="eyebrow">How it works</div>
+    <h2>Set up in a week. Entirely online.</h2>
+    <p class="lead">No meetings and no software to learn. Everything happens over email or text.</p>
+    <div class="grid g3 steps">
+      <div class="step"><h3>Free audit</h3><p>Send us your restaurant's name. Within 48 hours you get a free audit and sample replies to your real reviews.</p></div>
+      <div class="step"><h3>Quick setup</h3><p>Add Backstage as a manager on your Google profile and social accounts. It takes about 5 minutes, and we send step-by-step instructions.</p></div>
+      <div class="step"><h3>We take it from there</h3><p>Text us photos when you have them. We handle the replies, posts, and updates and send you a report every month.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="pricing">
+  <div class="wrap">
+    <div class="eyebrow" style="text-align:center">Pricing</div>
+    <h2 style="text-align:center;margin-bottom:34px">One plan. No surprises.</h2>
+    <div class="price">
+      <h3 style="font-size:24px;margin-bottom:10px">Online Presence Plan</h3>
+      <div class="amt">$199<small>/month</small></div>
+      <ul>
+        <li>Reply to every Google review within 24 hours</li>
+        <li>Weekly Google profile update or photo post</li>
+        <li>3 Instagram / Facebook posts per week</li>
+        <li>Hours, menu, and description always accurate</li>
+        <li>One-page monthly report</li>
+        <li>Month to month, cancel with 30 days' notice</li>
+      </ul>
+      <a class="btn" href="#audit">Start with a free audit</a>
+      <div class="addons"><span>New website: $500 setup, free with 6 months</span><span>Daily posts: +$75/mo</span></div>
+      <div class="launch">Launch offer: first month free for our first 3 restaurants.</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap" style="max-width:760px">
+    <div class="eyebrow">Questions</div>
+    <h2 style="margin-bottom:26px">Good to know</h2>
+    <details><summary>Will the replies sound like a robot?</summary><p>No. Every reply is personal: it uses the reviewer's name and mentions what they actually ordered or said. In the first week you approve the tone so it sounds like you.</p></details>
+    <details><summary>Do I lose control of my accounts?</summary><p>Never. You add Backstage as a manager, so you stay the owner, and you can remove our access with one click at any time.</p></details>
+    <details><summary>What if I get a really bad review?</summary><p>We reply calmly and professionally, and we message you the same day so you know about it. We never argue with customers or offer refunds on your behalf without asking.</p></details>
+    <details><summary>Do we need to meet?</summary><p>No. Backstage is fully online, so everything happens by email or text at times that work around your service.</p></details>
+    <details><summary>Is there a contract?</summary><p>No long-term contract. It's month to month, and you can cancel with 30 days' notice.</p></details>
+  </div>
+</section>
+
+<section id="audit" class="final">
+  <div class="wrap">
+    <div class="eyebrow">Free review audit</div>
+    <h2>See what Backstage would do for your restaurant.</h2>
+    <p>Email us your restaurant's name and city. Within 48 hours we'll send a free audit of your Google profile plus sample replies to your real reviews, with no obligation.</p>
+    <a class="btn" href="mailto:backstagesocal.co@gmail.com?subject=Free%20review%20audit&body=Restaurant%20name%3A%20%0ACity%3A%20">Email for a free audit</a>
+    <p style="margin-top:16px;font-size:15px">backstagesocal.co@gmail.com</p>
+  </div>
+</section>
+
+<footer><div class="wrap">
+  <div>© 2026 Backstage · Online presence for local restaurants</div>
+  <div>Serving restaurants across Southern California</div>
+</div></footer>
+
+</body>
+</html>
